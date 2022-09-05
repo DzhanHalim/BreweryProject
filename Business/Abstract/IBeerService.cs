@@ -14,9 +14,9 @@ namespace Business.Abstract
         IDataResult<List<Beer>> GetAllByBreweryId(int Id);
         
         // FR2
-        IResult Add(Beer product);
+        IResult Add(Beer beer);
         // FR3
-        IResult Delete(Beer product);
+        IResult Delete(Beer beer);
 
 
     }

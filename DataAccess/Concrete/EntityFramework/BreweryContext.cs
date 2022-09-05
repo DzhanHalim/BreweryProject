@@ -13,8 +13,9 @@ namespace DataAccess.Concrete.EntityFramework
             //thats my localc DB, if we have a public one then we need to provide the password aswell
             optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Brewery;Trusted_Connection=true");
         }
-        // binding the tables with objects
-        public DbSet<Beer> Beers { get; set; }
-        
+        // binding the tables with objects 
+        public DbSet<Beer> Beers { get; set; } 
+        public DbSet<WholesalerStock> WholesalerStock { get; set; }
+
     }
 }
