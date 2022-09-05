@@ -15,6 +15,8 @@ namespace DataAccess.Concrete.EntityFramework
         }
         // binding the tables with objects 
         public DbSet<Beer> Beers { get; set; } 
+        public DbSet<Wholesaler> WholeSaler { get; set; } 
+        public DbSet<Brewery> Brewery { get; set; }
         public DbSet<WholesalerStock> WholesalerStock { get; set; }
 
     }
