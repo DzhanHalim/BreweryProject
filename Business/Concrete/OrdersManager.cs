@@ -1,9 +1,11 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -11,14 +13,24 @@ namespace Business.Concrete
     public class OrdersManager : IOrdersService
     {
         IOrdersDal _ordersDal;
+        IWholesalerStockService _wholesalerStockService;
 
-        public OrdersManager(IOrdersDal ordersDal)
+        public OrdersManager(IOrdersDal ordersDal, IWholesalerStockService wholesalerStockService)
         {
             _ordersDal = ordersDal;
+            _wholesalerStockService = wholesalerStockService;
         }
 
         public IResult Add(Orders order)
         {
+             
+            IResult result = BusinessRules.Run(CheckIfOrdersGreaterThanStock(order), CheckDuplicateOrder(order),
+                CheckIfWholesalerExist(order.WholesalerId), CheckIfOrderEmpty(order));
+
+            if (result != null)
+            {
+                return result;
+            }
             _ordersDal.Add(order);
             return new SuccessResult("Success");
         }
@@ -47,5 +59,61 @@ namespace Business.Concrete
             _ordersDal.Update(order);
             return new SuccessResult("");
         }
+
+        private IResult CheckIfOrderEmpty(Orders order)
+        {
+
+            if (order == null)
+            {
+                return new ErrorResult();
+
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfWholesalerExist(int wholesalerId)
+        {
+            var result = _wholesalerStockService.GetAllByWholesalerId(wholesalerId).Data;
+            if (result == null)
+            {
+                return new ErrorResult();
+
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckDuplicateOrder(Orders order)
+        {
+            var result = _ordersDal.GetAll(p =>
+               p.CustomerId == order.CustomerId
+            && p.BeerId == order.BeerId
+            && p.Quantity == order.Quantity).Count;
+            if (result > 0)
+            {
+                return new ErrorResult();
+
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfOrdersGreaterThanStock(Orders order)
+        {
+            var result = _wholesalerStockService.GetAll().Data.Where(w => w.WholesalerId == order.WholesalerId &&
+             w.BeerId == order.BeerId).ToList();
+
+            int stock = 0;
+            foreach (var item in result)
+            {
+                stock = item.BeersInStock;
+            }
+
+            if (stock < order.Quantity)
+            {
+                return new ErrorResult();
+
+            }
+            return new SuccessResult();
+        }
+
     }
 }

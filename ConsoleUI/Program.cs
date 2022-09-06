@@ -10,6 +10,18 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+
+            OrdersManager ordersManager = new OrdersManager(new EfOrdersDal(),
+                new WholesalerStockManager(new EfWholesalerStockDal()));
+
+            Orders order = new Orders();
+            order.BeerId = 1;
+            order.CustomerId = 1;
+            order.WholesalerId = 1;
+            order.Discount = "";
+            order.Quantity = 1;
+            ordersManager.Add(order);
+
             //F1 List all beers by brewery :  
             BeerManager beerManager = new BeerManager(new EfBeerDal());
             var beersByBrewery = beerManager.GetAllByBreweryId(1);
@@ -59,7 +71,7 @@ namespace ConsoleUI
 
             }
 
-             
+
 
 
             WholesalerStockManager wholsalerStockManager = new WholesalerStockManager(new EfWholesalerStockDal());
