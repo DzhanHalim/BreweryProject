@@ -7,8 +7,7 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfWholesalerDal : EfEntityRepositoryBase<Wholesaler, BreweryContext>, IWholesalerDal
+    public class EfOrdersDal : EfEntityRepositoryBase<Orders, BreweryContext>, IOrdersDal
     {
-         
     }
 }

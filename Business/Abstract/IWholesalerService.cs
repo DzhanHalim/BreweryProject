@@ -13,6 +13,7 @@ namespace Business.Abstract
 
         IResult Add(Wholesaler wholesaler);
 
+       
         IResult Delete(Wholesaler wholesaler);
         IResult Update(Wholesaler wholesaler);
     }
