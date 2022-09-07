@@ -1,5 +1,6 @@
 using Business.Abstract;
 using Business.Concrete;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Builder;
@@ -29,6 +30,7 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+             
             services.AddControllers();
             // addsingleton = even if we get thousands of requests, only creates one refferance in the memory and uses that one for everything
             // can only be used for classes that doesnt contain any data, but only logic
