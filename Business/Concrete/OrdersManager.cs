@@ -14,16 +14,18 @@ namespace Business.Concrete
     {
         IOrdersDal _ordersDal;
         IWholesalerStockService _wholesalerStockService;
+        IBeerService _beerService;
 
-        public OrdersManager(IOrdersDal ordersDal, IWholesalerStockService wholesalerStockService)
+        public OrdersManager(IOrdersDal ordersDal, IWholesalerStockService wholesalerStockService, IBeerService beerService)
         {
             _ordersDal = ordersDal;
             _wholesalerStockService = wholesalerStockService;
+            _beerService = beerService;
         }
 
         public IResult Add(Orders order)
         {
-             
+
             IResult result = BusinessRules.Run(CheckIfOrdersGreaterThanStock(order), CheckDuplicateOrder(order),
                 CheckIfWholesalerExist(order.WholesalerId), CheckIfOrderEmpty(order));
 
@@ -31,7 +33,25 @@ namespace Business.Concrete
             {
                 return result;
             }
+            int discount = 0;
+            if (order.Quantity > 10)
+            {
+                discount = 10;
+            }
+            else if (order.Quantity > 20)
+            {
+                discount = 20;
+            }
+            var price = _beerService.GetById(order.BeerId).Data.Price;
+            var totalPrice = order.Quantity * price;
+            if (discount != 0)
+            {
+                totalPrice = (totalPrice * discount) / 100;
+            }
+                        
+            order.TotalPrice = totalPrice;
             _ordersDal.Add(order);
+
             return new SuccessResult("Success");
         }
 

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,19 +12,19 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BeersController : ControllerBase
+    public class OrdersController : ControllerBase
     {
-        IBeerService _beerService;
+        IOrdersService _orderService;
 
-        public BeersController(IBeerService beerService)
+        public OrdersController(IOrdersService orderService)
         {
-            _beerService = beerService;
+            _orderService = orderService;
         }
 
         [HttpGet("getall")]
         public IActionResult Get()
         {
-            var result = _beerService.GetAll();
+            var result = _orderService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -31,21 +32,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpGet("getallbybreweryid")]
-        public IActionResult GetAllByBreweryId(int Id)
-        {
-            var result = _beerService.GetAllByBreweryId(Id);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result.Message);
-        }
+
 
         [HttpGet("getbyid")]
         public IActionResult Get(int Id)
         {
-            var result = _beerService.GetById(Id);
+            var result = _orderService.GetById(Id);
             if (result.Success)
             {
                 return Ok(result);
@@ -54,12 +46,34 @@ namespace WebAPI.Controllers
         }
         [HttpPost("add")]
 
-        public IActionResult Add(Beer beer)
+        public IActionResult Add(Orders order)
         {
-            var result = _beerService.Add(beer);
+            var result = _orderService.Add(order);
 
             if (result.Success)
-            {                
+            {
+                return Ok(new DataResult<Orders>(order, result.Success, result.Message));
+            }
+            return BadRequest(result.Message);
+        }
+
+        public IActionResult Delete(Orders order)
+        {
+            var result = _orderService.Delete(order);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+
+        public IActionResult Update(Orders order)
+        {
+            var result = _orderService.Update(order);
+
+            if (result.Success)
+            {
                 return Ok(result);
             }
             return BadRequest(result.Message);

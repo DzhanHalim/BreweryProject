@@ -43,6 +43,8 @@ namespace WebAPI
             services.AddSingleton<IWholesalerDal, EfWholesalerDal>();
             services.AddSingleton<IBreweryService, BreweryManager>();
             services.AddSingleton<IBreweryDal, EfBreweryDal>();
+            services.AddSingleton<IOrdersService, OrdersManager>();
+            services.AddSingleton<IOrdersDal, EfOrdersDal>();
 
         }
 

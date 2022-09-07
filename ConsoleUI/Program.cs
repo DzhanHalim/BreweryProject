@@ -12,14 +12,14 @@ namespace ConsoleUI
         {
 
             OrdersManager ordersManager = new OrdersManager(new EfOrdersDal(),
-                new WholesalerStockManager(new EfWholesalerStockDal()));
+                new WholesalerStockManager(new EfWholesalerStockDal()), new BeerManager(new EfBeerDal()));
 
             Orders order = new Orders();
             order.BeerId = 1;
             order.CustomerId = 1;
             order.WholesalerId = 1;
             order.Discount = "";
-            order.Quantity = 1;
+            order.Quantity = 10;
             ordersManager.Add(order);
 
             //F1 List all beers by brewery :  
