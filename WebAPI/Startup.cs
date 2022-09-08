@@ -41,12 +41,12 @@ namespace WebAPI
             services.AddSingleton<IWholesalerStockService, WholesalerStockManager>();
             services.AddSingleton<IWholesalerStockDal, EfWholesalerStockDal>();
 
-            services.AddSingleton<IWholesalerService, WholesalerManager>();
-            services.AddSingleton<IWholesalerDal, EfWholesalerDal>();
-            services.AddSingleton<IBreweryService, BreweryManager>();
-            services.AddSingleton<IBreweryDal, EfBreweryDal>();
-            services.AddSingleton<IOrdersService, OrdersManager>();
-            services.AddSingleton<IOrdersDal, EfOrdersDal>();
+            //services.AddSingleton<IWholesalerService, WholesalerManager>();
+            //services.AddSingleton<IWholesalerDal, EfWholesalerDal>();
+            //services.AddSingleton<IBreweryService, BreweryManager>();
+            //services.AddSingleton<IBreweryDal, EfBreweryDal>();
+            //services.AddSingleton<IOrdersService, OrdersManager>();
+            //services.AddSingleton<IOrdersDal, EfOrdersDal>();
 
         }
 
