@@ -36,10 +36,11 @@ namespace WebAPI
             // can only be used for classes that doesnt contain any data, but only logic
             // if someone uses Iproductservice, give him product manager
             // built in IoC container
-            services.AddSingleton<IBeerService, BeerManager>();
-            services.AddSingleton<IBeerDal, EfBeerDal>();
-            services.AddSingleton<IWholesalerStockService, WholesalerStockManager>();
-            services.AddSingleton<IWholesalerStockDal, EfWholesalerStockDal>();
+
+            //services.AddSingleton<IBeerService, BeerManager>();
+            //services.AddSingleton<IBeerDal, EfBeerDal>();
+            //services.AddSingleton<IWholesalerStockService, WholesalerStockManager>();
+            //services.AddSingleton<IWholesalerStockDal, EfWholesalerStockDal>();
 
             //services.AddSingleton<IWholesalerService, WholesalerManager>();
             //services.AddSingleton<IWholesalerDal, EfWholesalerDal>();

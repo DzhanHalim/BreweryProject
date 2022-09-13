@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -23,6 +25,7 @@ namespace Business.Concrete
             _beerService = beerService;
         }
 
+         
         public IResult Add(Orders order)
         {
 
