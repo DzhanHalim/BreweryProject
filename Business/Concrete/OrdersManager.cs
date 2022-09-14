@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
@@ -25,7 +26,7 @@ namespace Business.Concrete
             _beerService = beerService;
         }
 
-         
+        [SecuredOperation("admin,product.add")]
         public IResult Add(Orders order)
         {
 
@@ -51,7 +52,7 @@ namespace Business.Concrete
             {
                 totalPrice = (totalPrice * discount) / 100;
             }
-                        
+
             order.TotalPrice = totalPrice;
             _ordersDal.Add(order);
 
